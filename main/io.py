@@ -1,4 +1,5 @@
 import math
+import json
 
 s = 'Hello, world.'
 print(str(s))
@@ -53,9 +54,51 @@ print('Jack: {Jack:d}; Sjoerd: {Sjoerd:d}; Dcab: {Dcab:d}'.format(**table))
     File Operations
 """
 
-f = open('../files/workfile', 'w')
+f = open('../files/workfile1', 'w')
+value = ('the answer', 42)
+s = str(value)
 f.write("hi chandu")
+f.write(s)
 f.close()
-f = open('../files/workfile', 'r')
 
+f = open('../files/workfile1', 'r')
 print(f.read())
+f.close()
+
+f = open('../files/workfile', 'r')
+for line in f:
+    print(line, end='')
+    
+""" list(f) or f.readlines() """
+
+print('\n',f.tell())
+
+print(f.seek(5))
+"""
+In text files (those opened without a b in the mode string), 
+only seeks relative to the beginning of the file are allowed 
+(the exception being seeking to the very file end with seek(0, 2)).
+
+f.seek(-3, 2) # Go to the 3rd byte before the end (in binary mode)
+
+"""
+
+print(f.seek(0,2))
+
+""" Closing file in better way. Using with keyword will automatically 
+take care of closing file even during exceptions. """
+
+with open('../files/workfile1', 'r') as f:
+    print(f.read())
+
+""" Saving structured data with json """
+with open('../files/workfile1', 'r') as f:
+    print(json.dumps(f.read()))
+
+f = open('../files/workfile1', 'w')
+
+json.dump(x, f) # save json ormat to file f
+
+f = open('../files/workfile1', 'r')
+
+x = json.load(f) #decode object from json file
